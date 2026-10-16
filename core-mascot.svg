@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" width="720" height="720" role="img" aria-label="东莞理工学院吉祥物">
+  <!--
+    备选中心图案（当前页面没有用它，默认用的是 core.webp / core.png 的奶龙图）。
+    想换回这个原创吉祥物：把 index.html 里那段 <picture>…</picture> 删掉，
+    换成 <img class="core" src="core-mascot.svg" alt="" width="720" height="720"> 即可。
+  -->
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EAF4FF"/>
+      <stop offset="1" stop-color="#AFD1F2"/>
+    </linearGradient>
+    <linearGradient id="belly" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity=".5"/>
+    </linearGradient>
+    <radialGradient id="blush" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FF9E9E" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#FF9E9E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!--
+    整体缩放：以「脚底」(360,640) 为锚点缩到 94%，让学士帽别去压住文字环上的字。
+    想调大小就改 scale 的值（0.8 = 更小、0.94 = 现在这样）；
+    缩放锚点固定，所以改完脚底仍然贴在同一位置，不会浮起来。
+  -->
+  <g transform="translate(21.6 38.4) scale(0.94)">
+
+  <!-- 落地投影 -->
+  <ellipse cx="360" cy="654" rx="152" ry="20" fill="#2B4E75" opacity=".12"/>
+
+  <!-- 手臂（先画，被身体压住，只露出外侧） -->
+  <line x1="216" y1="400" x2="156" y2="492" stroke="#AFD1F2" stroke-width="60" stroke-linecap="round"/>
+  <line x1="504" y1="400" x2="564" y2="492" stroke="#AFD1F2" stroke-width="60" stroke-linecap="round"/>
+
+  <!-- 身体：一个圆润的梨形 -->
+  <path d="M360 152 C452 152 528 232 540 372 C552 512 486 640 360 640
+           C234 640 168 512 180 372 C192 232 268 152 360 152 Z"
+        fill="url(#body)"/>
+
+  <!-- 肚皮 -->
+  <ellipse cx="360" cy="500" rx="132" ry="118" fill="url(#belly)"/>
+
+  <!-- 腮红 -->
+  <circle cx="256" cy="398" r="36" fill="url(#blush)"/>
+  <circle cx="464" cy="398" r="36" fill="url(#blush)"/>
+
+  <!-- 眼睛 -->
+  <ellipse cx="302" cy="344" rx="30" ry="34" fill="#1E3550"/>
+  <ellipse cx="418" cy="344" rx="30" ry="34" fill="#1E3550"/>
+  <circle cx="292" cy="330" r="10" fill="#FFFFFF"/>
+  <circle cx="408" cy="330" r="10" fill="#FFFFFF"/>
+  <circle cx="290" cy="348" r="5" fill="#FFFFFF" opacity=".75"/>
+  <circle cx="406" cy="348" r="5" fill="#FFFFFF" opacity=".75"/>
+
+  <!-- 微笑 -->
+  <path d="M332 408 Q360 436 388 408" fill="none" stroke="#1E3550"
+        stroke-width="7" stroke-linecap="round"/>
+
+  <!-- 学士帽：帽箍 + 帽板 + 顶珠 + 流苏 -->
+  <ellipse cx="360" cy="190" rx="88" ry="30" fill="#0B2B52"/>
+  <path d="M360 92 L528 148 L360 204 L192 148 Z" fill="#123A6B"/>
+  <path d="M360 92 L528 148 L360 204 Z" fill="#0E2E56"/>
+  <circle cx="360" cy="148" r="11" fill="#F3C34E"/>
+  <path d="M360 148 C434 170 492 200 500 238" fill="none" stroke="#F3C34E"
+        stroke-width="7" stroke-linecap="round"/>
+  <circle cx="500" cy="252" r="15" fill="#F3C34E"/>
+  </g>
+</svg>

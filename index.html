@@ -19,29 +19,9 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
 
-<script>
-  // 统计状态位。failed:true = 没启用统计，redirect() 会立刻跳转、一秒都不等。
-  // 启用下面的百度统计代码块后，这里会被自动改成 false。
-  var _hmt = window._hmt = window._hmt || [];
-  window.__analytics = { ready: false, failed: true, start: Date.now() };
-</script>
-
-<!-- 访问统计（可选）。要用就去掉这段注释，并把 ? 后面的站点 ID 换成你自己的
-     （百度统计 → 管理 → 代码获取）。它有 onload/onerror 两个钩子，
-     页面会据此判断「要不要为了上报多等一会儿」，不装也完全不影响跳转。
-<script>
-  window.__analytics.failed = false;
-  (function () {
-    var hm = document.createElement('script');
-    hm.src = 'https://hm.baidu.com/hm.js?在这里填你的站点ID';
-    hm.async = true;
-    hm.onload = function () { window.__analytics.ready = true; };
-    hm.onerror = function () { window.__analytics.failed = true; };
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
-</script>
--->
+<!-- 本页不加载任何第三方统计 / 遥测脚本。
+     整页只有文件末尾那一份本地脚本，不会向百度、谷歌或任何外部服务
+     发送访问数据；打开页面时的对外请求只有「预热目标官网」这一次 prefetch。 -->
 
 <!-- 资源统一用相对路径（不写开头的 /）：这样双击本地打开和放到站点根目录都能正常显示。
      写成 /core.webp 的话，本地双击会去磁盘根目录找，图全变碎图标。
@@ -55,7 +35,6 @@
     --muted: #8f7a45;
     --ink: #fece0e;
     --track: rgba(254, 206, 14, .22);
-    --card: #ffffff;
     --size: min(64vw, 44vh, 340px);
     color-scheme: light dark;
   }
@@ -65,7 +44,6 @@
       --fg: #eef1ff;
       --muted: #8b93b8;
       --track: rgba(254, 206, 14, .18);
-      --card: #141a2e;
     }
   }
 
@@ -130,52 +108,24 @@
   .hint { font-size: 13px; color: var(--muted); }
   .hint a { color: inherit; }
 
-  /* 底部备案号：做了 ICP 备案就必须展示，法规要求 */
-  .icp {
+  /* 底部信息条：免责声明常显；备案号也放这里（默认注释掉，备案通过后放开） */
+  .foot {
     position: fixed; left: 0; right: 0; bottom: max(8px, env(safe-area-inset-bottom));
-    text-align: center; font-size: 12px; color: var(--muted);
+    padding: 0 16px; text-align: center;
+    font-size: 12px; line-height: 1.55; color: var(--muted);
   }
-  .icp a { color: inherit; text-decoration: none; }
-  .icp a:hover { text-decoration: underline; }
-
-  /* 右下角「关于」：打开时暂停倒计时 */
-  .about-btn {
-    position: fixed; right: max(8px, env(safe-area-inset-right)); bottom: max(8px, env(safe-area-inset-bottom));
-    padding: 8px 10px; border: 0; background: none; color: var(--muted);
-    font: inherit; font-size: 13px; cursor: pointer; z-index: 2;
-    text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px;
-    transition: color .2s, text-decoration-color .2s, opacity .3s;
-  }
-  .about-btn:hover, .about-btn:focus-visible { color: var(--fg); text-decoration-color: currentColor; }
-  .about {
-    width: min(380px, calc(100vw - 32px)); margin: auto; padding: 0; border: 0; border-radius: 16px;
-    background: var(--card); color: var(--fg); box-shadow: 0 18px 50px rgba(0, 0, 0, .25);
-    cursor: auto; user-select: text;
-  }
-  .about[open] { animation: rise .25s ease-out; }
-  .about::backdrop { background: rgba(8, 9, 20, .55); backdrop-filter: blur(3px); }
-  .about-body { padding: 24px 22px 18px; }
-  .about h2 { font-size: 18px; margin-bottom: 12px; }
-  .about p { font-size: 14px; line-height: 1.7; }
-  .about p + p { margin-top: 8px; }
-  .about code {
-    padding: 1px 6px; border-radius: 6px; background: var(--track);
-    font: inherit; font-weight: 700; white-space: nowrap;
-  }
-  .about form { margin-top: 18px; text-align: right; }
-  .about form button {
-    padding: 8px 18px; border: 0; border-radius: 999px; background: var(--ink); color: #3a2c00;
-    font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
-  }
+  .foot p { margin: 0; }
+  .foot p + p { margin-top: 2px; }
+  .foot a { color: inherit; text-decoration: none; }
+  .foot a:hover { text-decoration: underline; }
 
   .run .badge { animation: pop .7s cubic-bezier(.34, 1.56, .64, 1) backwards; }
   .run .core { animation: breathe 1.8s ease-in-out .7s infinite; }
   .run .bar { animation: fill var(--delay) linear forwards; }
   .run .copy { animation: rise .5s ease-out .15s backwards; }
-  .paused .bar { animation-play-state: paused; }
   .leaving .wrap { transform: scale(1.18); opacity: 0; }
   .leaving .copy { opacity: 0; transform: translateY(8px); }
-  .leaving .about-btn, .leaving .icp { opacity: 0; }
+  .leaving .foot { opacity: 0; }
 
   @keyframes pop { from { transform: scale(.55) rotate(-25deg); opacity: 0; } }
   @keyframes breathe { 50% { transform: scale(1.03); } }
@@ -184,7 +134,7 @@
   @keyframes dot { 0%, 100% { opacity: .25; transform: none; } 40% { opacity: 1; transform: translateY(-.25em); } }
 
   @media (prefers-reduced-motion: reduce) {
-    .run .badge, .run .core, .run .copy, .dots i, .about[open] { animation: none; }
+    .run .badge, .run .core, .run .copy, .dots i { animation: none; }
     .wrap, .copy { transition: none; }
   }
 </style>
@@ -212,19 +162,12 @@
   </div>
 </main>
 
-<!-- 做了 ICP 备案就必须在底部展示备案号。备案通过后把下面这行注释去掉，换成你的号 -->
-<!-- <p class="icp"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备00000000号-1</a></p> -->
-
-<button class="about-btn" id="about-btn" type="button" hidden>关于</button>
-<dialog class="about" id="about" aria-labelledby="about-title">
-  <div class="about-body">
-    <h2 id="about-title">关于本站</h2>
-    <p>打开 <code>你的域名</code>，会先加载此页面，把你送到东莞理工学院官方网站。</p>
-    <p>本站与东莞理工学院并无任何官方关联，域名、页面均为网友自制，仅作趣味跳转之用。</p>
-    <p>校名、校徽等标识的权利归东莞理工学院所有；页面中的「奶龙」形象版权归其原创方所有，本站为非商业性的粉丝趣味使用，不作任何商用。</p>
-    <form method="dialog"><button>知道了</button></form>
-  </div>
-</dialog>
+<!-- 底部信息条。免责声明常显——原来它放在「关于」弹窗里，弹窗撤掉后挪到这里，避免页面失去免责声明。
+     备案号同样放这一条里：备案通过后把注释去掉、换成你的号（法规要求备案站必须展示） -->
+<footer class="foot">
+  <p class="disclaimer">本站非东莞理工学院官方站点，仅作趣味跳转；校名、校徽及页面形象版权归各自权利人所有。</p>
+  <!-- <p class="icp"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备00000000号-1</a></p> -->
+</footer>
 
 <script>
 (() => {
@@ -244,7 +187,7 @@
   body.style.setProperty('--delay', TOTAL + 'ms'); // 进度条正好在跳转那一刻走满
   if (stay) document.getElementById('hint').textContent += '（演示模式，不会真的跳转）';
 
-  // 动画期间先把目标页面预热，避免跳过去时白屏一下
+  // 跳转前先把目标站预取到本地缓存，避免落地页出现空白
   const prefetch = document.createElement('link');
   prefetch.rel = 'prefetch';
   prefetch.href = TARGET;
@@ -254,10 +197,6 @@
     [{ transform: 'rotate(0turn)' }, { transform: 'rotate(1turn)' }],
     { duration: SPIN, iterations: Infinity }
   );
-
-  const aboutBtn = document.getElementById('about-btn');
-  const about = document.getElementById('about');
-  aboutBtn.hidden = false; // 没有 JS 时弹窗打不开，按钮也就不显示
 
   // 键盘依次按 d、g：换个校名，纯属好玩
   let seq = '';
@@ -271,11 +210,10 @@
     document.title = document.getElementById('title').textContent;
   });
 
-  let timer, leaving, deadline, remaining;
+  let timer, leaving;
 
   function arm(ms) {
-    deadline = performance.now() + ms;
-    timer = setTimeout(() => leave('auto'), ms);
+    timer = setTimeout(leave, ms);
   }
 
   function start() {
@@ -287,12 +225,10 @@
     arm(DELAY);
   }
 
-  function leave(reason) {
+  function leave() {
     if (leaving) return;
     leaving = true;
     clearTimeout(timer);
-    // 顺手记一笔：是用户等完了（auto）还是等不及点掉的（skip）
-    if (window._hmt) window._hmt.push(['_trackEvent', 'redirect', reason === 'skip' ? 'skip' : 'auto']);
     body.classList.add('leaving');   // 离场动画开始（缩放 + 淡出，EXIT 毫秒）
     if (ring) { // 离场时文字环越转越快
       const t0 = performance.now();
@@ -306,50 +242,17 @@
     setTimeout(stay ? start : redirect, stay ? EXIT + 600 : EXIT + BUFFER);
   }
 
-  // 跳转前给统计脚本留一点时间。
-  // 本页总共只活 3 秒，而 hm.js 走外网实测要 1 秒以上；用户如果一进来就点掉，
-  // 跳转会在 0.7 秒左右发生，脚本还没加载完就被 location.replace 掐断，这次访问就丢了。
-  // 策略：保证「页面打开到真正跳转」至少经过 BUDGET 毫秒。
-  //   · 正常等完动画的（约 3.1 秒）已远超预算 → 不额外等待，用户完全无感；
-  //   · 提前点击的 → 最多补等几百毫秒，把这次访问救回来；
-  //   · 没启用统计（failed）时一秒都不等，绝不为了统计拖累用户。
-  const BUDGET = 1200;
+  // 直接跳转。本页不加载任何统计脚本，没有需要等上报的地方，
+  // 所以这里不做任何延时轮询——动画一播完立刻走人，一秒都不多停。
   function redirect() {
-    const a = window.__analytics;
-    const elapsed = a ? Date.now() - a.start : Infinity;
-    if (!a || a.ready || a.failed || elapsed >= BUDGET) {
-      location.replace(TARGET);
-      return;
-    }
-    const poll = setInterval(() => {
-      const b = window.__analytics;
-      if (b.ready || b.failed || Date.now() - b.start >= BUDGET) {
-        clearInterval(poll);
-        location.replace(TARGET);
-      }
-    }, 60);
+    location.replace(TARGET);
   }
 
-  // 打开「关于」时暂停倒计时和进度条，关闭后从剩余时间继续
-  aboutBtn.addEventListener('click', () => {
-    if (leaving) return;
-    clearTimeout(timer);
-    remaining = Math.max(0, deadline - performance.now());
-    body.classList.add('paused');
-    about.showModal();
-  });
-  about.addEventListener('close', () => {
-    body.classList.remove('paused');
-    if (!leaving) arm(remaining);
-  });
-  about.addEventListener('click', e => { if (e.target === about) about.close(); }); // 点遮罩关闭
-
-  // 点击或按键立即跳转；「关于」相关操作和 Tab、修饰键除外
+  // 点击或按键立即跳转；Tab 和修饰键除外（它们多为键盘导航，不该触发跳转）
   const IGNORED_KEYS = ['Tab', 'Shift', 'Control', 'Alt', 'Meta'];
   function skip(e) {
-    if (about.open || aboutBtn.contains(e.target)) return;
     if (e.type === 'keydown' && IGNORED_KEYS.includes(e.key)) return;
-    leave('skip');
+    leave();
   }
   addEventListener('pointerdown', skip);
   addEventListener('keydown', skip);
